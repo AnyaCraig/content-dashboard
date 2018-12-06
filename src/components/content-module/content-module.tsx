@@ -23,7 +23,15 @@ const SubSection = ({label, data, linkProp, labelProp, shouldLink = false}:
   </div>
 );
 
-export const ModuleComponent = ({module, cohortAssignments}: {module: ContentModule, cohortAssignments?: any[]}) => (
+export const ModuleComponent = ({module, cohortAssignments}: {module: ContentModule, cohortAssignments?: any[]}) => {
+  
+  // console.log("dependencies", module.dependencies)
+  // console.log("content", module.content)
+  // console.log("challenges", module.challenges) 
+  // console.log("slides", module.slides)
+  console.log("EXTRAS", module.extras)
+
+  return (
   <Card style={{width: '300px', height: '400px', margin: '15px'}}>
       <CardContent className="flex-grow-1">
         <div style={{marginBottom: '10px'}} >
@@ -68,4 +76,4 @@ export const ModuleComponent = ({module, cohortAssignments}: {module: ContentMod
         }
 
       </CardContent>
-  </Card>);
+  </Card>)};
