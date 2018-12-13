@@ -17,12 +17,10 @@ interface TextFieldGroupProps {
 
 const TextFieldGroup = ({ fieldName, fieldList, onChange, onClick }: TextFieldGroupProps) => {
 
-  console.log("FIELD LIST", fieldList)
-  console.log("field name", fieldName)
   return (
     <div>
       {
-        fieldList && fieldList.map((value, index) => {
+        fieldList !== undefined && fieldList.map((value, index) => {
           return (
             <TextField
               autoFocus={true}
@@ -97,17 +95,19 @@ export class EditForm extends React.Component<FormDialogProps, FormDialogState> 
   updateTextFieldGroupValue = (e) => {
     const {target: {name, value}} = e;
     const index = e.target.getAttribute('data-index');
-    console.log("VALUE", value)
-    const checkedValue = value ? value.trim() : null
+    const updatedValues = [
+      ...this.state.currentModule[name].slice(0, index), 
+      value.trim(), 
+      ...this.state.currentModule[name].slice(index + 1)
+    ].filter(el => !!el);
+
+    const toUpdate = {
+      ...this.state.currentModule,
+      [name]: updatedValues
+    };
+
     this.setState({
-      currentModule: {
-        ...this.state.currentModule,
-        [name]: [
-          ...this.state.currentModule[name].slice(0, index), 
-          checkedValue, 
-          ...this.state.currentModule[name].slice(index + 1)
-        ]
-      }
+      currentModule: toUpdate
     });
   }
 
@@ -167,7 +167,6 @@ export class EditForm extends React.Component<FormDialogProps, FormDialogState> 
               {
                 textFieldGroups.map((prop, index) => {
 
-                  console.log("FIELD LIST TRY", this.state.currentModule)
                   return (
                     <TextFieldGroup 
                       key={index}
