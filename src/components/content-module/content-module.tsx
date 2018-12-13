@@ -13,10 +13,10 @@ const SubSection = ({label, data, linkProp, labelProp, shouldLink = false}:
         Array.isArray(data) && data.length ?
           data.map((item, i) =>
             shouldLink ?
-              <a key={label + i} href={linkProp ? item[linkProp] : item} target="_blank" className="db">{labelProp ? item[labelProp] : item}</a> :
+              <a key={label + i} href={linkProp ? item[linkProp] : item} target="_blank" className="break-long">{labelProp ? item[labelProp] : item}</a> :
               <span className="db" key={label + i}>{item}</span>) :
           shouldLink ?
-            <a href={data as string} target="_blank" className="db">{data}</a> :
+            <a href={data as string} target="_blank" className="break-long">{data}</a> :
             data
       }
       </Typography>
@@ -24,7 +24,11 @@ const SubSection = ({label, data, linkProp, labelProp, shouldLink = false}:
 );
 
 export const ModuleComponent = ({module, cohortAssignments}: {module: ContentModule, cohortAssignments?: any[]}) => (
-  <Card style={{width: '300px', height: '400px', margin: '15px'}}>
+  <Card style={{
+    width: '300px', 
+    minHeight: '400px', 
+    margin: '15px'
+    }}>
       <CardContent className="flex-grow-1">
         <div style={{marginBottom: '10px'}} >
           <Typography variant="h6"> {module.name} </Typography>
