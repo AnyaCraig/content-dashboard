@@ -13,10 +13,10 @@ const SubSection = ({label, data, linkProp, labelProp, shouldLink = false}:
         Array.isArray(data) && data.length ?
           data.map((item, i) =>
             shouldLink ?
-              <a key={label + i} href={linkProp ? item[linkProp] : item} target="_blank" className="break-long">{labelProp ? item[labelProp] : item}</a> :
+              <a key={label + i} href={linkProp ? item[linkProp] : item} target="_blank" className="ellipsis-truncation db">{labelProp ? item[labelProp] : item}</a> :
               <span className="db" key={label + i}>{item}</span>) :
           shouldLink ?
-            <a href={data as string} target="_blank" className="break-long">{data}</a> :
+            <a href={data as string} target="_blank" className="ellipsis-truncation db">{data}</a> :
             data
       }
       </Typography>
