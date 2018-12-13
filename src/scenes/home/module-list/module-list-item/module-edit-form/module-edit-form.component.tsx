@@ -16,10 +16,11 @@ interface TextFieldGroupProps {
 }
 
 const TextFieldGroup = ({ fieldName, fieldList, onChange, onClick }: TextFieldGroupProps) => {
+
   return (
     <div>
       {
-        fieldList && fieldList.map((value, index) => {
+        fieldList !== undefined && fieldList.map((value, index) => {
           return (
             <TextField
               autoFocus={true}
@@ -82,6 +83,7 @@ export class EditForm extends React.Component<FormDialogProps, FormDialogState> 
 
   updateTextFieldInputValue = ({target: {id, value}}) => {
     const textFieldValue = isNaN(value) ? value.trim() : parseInt(value, 10);
+
     this.setState({
       currentModule: {
         ...this.state.currentModule,
@@ -89,19 +91,23 @@ export class EditForm extends React.Component<FormDialogProps, FormDialogState> 
       }
     });
   }
-
+  
   updateTextFieldGroupValue = (e) => {
     const {target: {name, value}} = e;
     const index = e.target.getAttribute('data-index');
+    const updatedValues = [
+      ...this.state.currentModule[name].slice(0, index), 
+      value.trim(), 
+      ...this.state.currentModule[name].slice(index + 1)
+    ].filter(el => !!el);
+
+    const toUpdate = {
+      ...this.state.currentModule,
+      [name]: updatedValues
+    };
+
     this.setState({
-      currentModule: {
-        ...this.state.currentModule,
-        [name]: [
-          ...this.state.currentModule[name].slice(0, index), 
-          value.trim(), 
-          ...this.state.currentModule[name].slice(index + 1)
-        ]
-      }
+      currentModule: toUpdate
     });
   }
 
@@ -160,6 +166,7 @@ export class EditForm extends React.Component<FormDialogProps, FormDialogState> 
               }
               {
                 textFieldGroups.map((prop, index) => {
+
                   return (
                     <TextFieldGroup 
                       key={index}
